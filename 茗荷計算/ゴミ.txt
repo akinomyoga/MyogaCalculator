@@ -1,0 +1,113 @@
+Module ÉSÉ~
+    Public Function É°2(ByVal x As Double) As Double
+        Dim b = 1
+        Do While x < 10
+            b *= x
+            x += 1
+        Loop
+        Dim a As Double = 1 / x
+        Dim da As Double = 1 / x / x
+        Dim a1 As Double = 4
+        Dim n As Integer = 2
+        b = lg2p - x + (x - 0.5) * math.ln(x) - math.ln(b)
+        Dim b0 As Double
+        Do
+            b0 = b
+            b += åvéZ1.Tn(n - 1, 0) / (a1 * (a1 - 1) * (n - 1)) * a
+            n += 2
+            a *= -da
+            a1 *= 4
+        Loop While n <= 3000 And Not b = b0
+        É°2 = exp(b)
+    End Function
+    Public Function Tn2(ByVal n As Integer, ByVal x As Double) As Double
+        Dim ee1 As Double, d As Integer, e1 As Double, e2 As Double
+        Dim b, b1, e, f, ee, cnt1, cnt2
+        Dim lb As Integer, S As String = ","
+        If n <= 0 Then '1
+            Tn2 = x
+        Else '1
+            b = "0,1,"
+            For cnt1 = 0 To n
+                lb = Len(b)
+                For cnt2 = 1 To lb
+                    f = Mid(b, cnt2, 1)
+                    If f = S Then '2
+                        If d > 0 Then ee1 = ee * d : b1 &= (ee1 & S)
+                        d += 1
+                        ee = ""
+                    Else '2
+                        ee &= f
+                    End If '2
+                Next cnt2
+                d = 0
+                lb = Len(b1)
+                For cnt2 = 1 To lb '2
+                    f = Mid(b1, cnt2, 1)
+                    If f = "," Then '3
+                        If d = 1 Then b = e1 & S & ee & S Else b &= (e + e2) & S
+                        d += 1
+                        e2 = e1
+                        e1 = ee
+                        ee = ""
+                    Else '3
+                        ee &= f
+                    End If '3
+                Next cnt2 '2
+                d = 0
+                b &= (e2 & S & e1 & S)
+            Next cnt1
+            For cnt2 = 1 To Len(b) '2
+                f = Mid(b, cnt2, 1)
+                If f = "," Then '3
+                    ee1 = ee
+                    Tn2 += (ee1 * x ^ d)
+                    d += 1
+                    ee = ""
+                Else '3
+                    ee &= f
+                End If '3
+            Next cnt2 '2
+        End If '1
+    End Function 'Bernoulli
+    Public Function Ln(ByVal n As Integer, ByVal p As Double, ByVal x As Double) As Double
+        If n <= 0 Then Return 1
+        If n = 1 Then Return p - x + 1
+        Dim e2 = 1
+        Dim e1 = p - x + 1
+        Dim a
+        For a = 2 To n
+            Ln = ((a + p - 1) * (e1 - e2) + (a - x) * e1) / a
+            e2 = e1
+            e1 = Ln 'e1Ç™Ç±Ç±Ç≈ãÅÇﬂÇΩLaÇÃíl
+        Next a
+    End Function 'Ln<sup>(p)</sup>(x)
+    Public Function Jn(ByVal n As Integer, ByVal x As Double)
+        Dim m As Integer, a As Double
+        x /= 2
+        Do
+            Jn = Jn + a
+            a = x ^ (n + 2 * m) / (fctl((m)) * fctl(n + m))
+            If m Mod 2 = 1 Then a = -a
+            m = m + 1
+        Loop While a <> 0 And m <= 30000
+    End Function
+End Module
+                'HelpPrograming.polynomial_a("yn", "", "-2*m/x", "", "y0", "y1")
+                'MsgBox(åvéZ1.Jn(3, 129) & " : " & bessel.Jn(3, 129))
+                'HelpPrograming.polynomial_b("j", "", "-2*n/x", "", "1e-75", "0", "MMMMMM")
+                'HelpPrograming.polynomial_a("Tschebysheff1", "", "-2*x", "", "1", "x")
+                'HelpPrograming.polynomial_a("Tschebysheff2", "", "-2*x", "", "0", "1")
+                'HelpPrograming.polynomial_c("y0a", "-0.00024846,0.00427916,-0.04261214,0.25300117,-0.74350384,0.60559366,0.36746691")**
+                'HelpPrograming.polynomial_c("j0a", "0.00021,-0.0039444,0.0444479,-3.163866,1.2656208,-2.2499997,1")
+                'HelpPrograming.polynomial_c("y1a", "0.0027873,-0.0400976,0.3123951,-1.3164827,2.1682709,0.2212091,-0.6366198")**
+                'HelpPrograming.polynomial_c("j1a", "0.00001109,-0.00031761,0.00443319,-0.03954289,0.21093573,-0.56249985,0.5")
+                'HelpPrograming.polynomial_c("f0a", "0.00014476,-0.00072805,0.00137237,-0.00009512,-0.00552740,-0.00000077,0.79788456")
+                'HelpPrograming.polynomial_c("t0a", "0.00013558,-0.00029333,-0.00054125,0.00262573,-0.00003954,,-0.04166397,-0.78539816")
+                'HelpPrograming.polynomial_c("f1a", "-0.00020033,0.00113653,-0.00249511,0.00017105,0.01659667,0.0000156,0.79788456")
+                'HelpPrograming.polynomial_c("t1a", "-0.00029166,0.00079824,0.00074348,-0.00637879,0.0000565,0.12499612,-2.35619449")
+                'HelpPrograming.polynomial_a("LegendreP", "n + a", "- x * (2 * n + 1)", "n - a + 1", "####", "####")**
+                'HelpPrograming.polynomial_b("LegendreP", "n + a", "- x * (2 * n + 1)", "n - a + 1", "####", "####", "a")**
+                'HelpPrograming.polynomial_a("LegendreQ", "n", "- x * (2 * n + 1)", "n + 1", "####", "####")**
+                'HelpPrograming.polynomial_a("Laguarre", "n + a - 2", "2 * n + a - x - 3", "n - 1", "1", "a - x + 1")
+                'HelpPrograming.polynomial_a("Hermite", "n", "x, "", "1", "x")
